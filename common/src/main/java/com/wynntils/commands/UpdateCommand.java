@@ -37,15 +37,19 @@ public class UpdateCommand extends CommandBase {
 
             completableFuture.whenComplete((result, throwable) -> {
                 switch (result) {
-                    case SUCCESSFUL -> McUtils.sendMessageToClient(new TextComponent(
-                                    "Successfully downloaded Wynntils/Artemis update. It will apply on shutdown.")
-                            .withStyle(ChatFormatting.DARK_GREEN));
-                    case ERROR -> McUtils.sendMessageToClient(
-                            new TextComponent("Error applying Wynntils/Artemis update.")
-                                    .withStyle(ChatFormatting.DARK_RED));
-                    case ALREADY_ON_LATEST -> McUtils.sendMessageToClient(
-                            new TextComponent("Wynntils/Artemis is already on latest version.")
-                                    .withStyle(ChatFormatting.YELLOW));
+                    case SUCCESSFUL:
+                        McUtils.sendMessageToClient(new TextComponent(
+                                        "Successfully downloaded Wynntils/Artemis update. It will apply on shutdown.")
+                                .withStyle(ChatFormatting.DARK_GREEN));
+                        break;
+                    case ERROR:
+                        McUtils.sendMessageToClient(new TextComponent("Error applying Wynntils/Artemis update.")
+                                .withStyle(ChatFormatting.DARK_RED));
+                        break;
+                    case ALREADY_ON_LATEST:
+                        McUtils.sendMessageToClient(new TextComponent("Wynntils/Artemis is already on latest version.")
+                                .withStyle(ChatFormatting.YELLOW));
+                        return;
                 }
             });
 

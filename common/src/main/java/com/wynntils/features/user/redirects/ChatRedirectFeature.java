@@ -178,8 +178,8 @@ public class ChatRedirectFeature extends UserFeature {
     }
 
     private class AreaDiscoveryRedirector extends SimpleRedirector {
-        private static final Pattern SYSTEM_PATTERN = Pattern.compile(
-                "§7Area Discovered: §r§f(.*)§r§d \\(\\+(\\d+) XP\\)");
+        private static final Pattern SYSTEM_PATTERN =
+                Pattern.compile("§7Area Discovered: §r§f(.*)§r§d \\(\\+(\\d+) XP\\)");
 
         @Override
         public Pattern getSystemPattern() {
@@ -193,7 +193,8 @@ public class ChatRedirectFeature extends UserFeature {
 
         @Override
         protected String getNotification(Matcher matcher) {
-            return ChatFormatting.GRAY + "Discovered " + ChatFormatting.RESET + matcher.group(1) + ChatFormatting.DARK_PURPLE + " (+" + matcher.group(2) + " XP)";
+            return ChatFormatting.GRAY + "Discovered " + ChatFormatting.RESET + matcher.group(1)
+                    + ChatFormatting.DARK_PURPLE + " (+" + matcher.group(2) + " XP)";
         }
     }
 

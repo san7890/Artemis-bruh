@@ -4,6 +4,7 @@
  */
 package com.wynntils.features.user.redirects;
 
+import com.wynntils.core.WynntilsMod;
 import com.wynntils.core.chat.MessageType;
 import com.wynntils.core.chat.RecipientType;
 import com.wynntils.core.config.Config;
@@ -22,6 +23,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @FeatureInfo
 public class ChatRedirectFeature extends UserFeature {
+    @Config
+    public RedirectAction areaDiscovery = RedirectAction.REDIRECT;
+
     @Config
     public RedirectAction craftedDurability = RedirectAction.REDIRECT;
 
@@ -61,6 +65,7 @@ public class ChatRedirectFeature extends UserFeature {
     private final List<Redirector> redirectors = new ArrayList<>();
 
     public ChatRedirectFeature() {
+        register(new AreaDiscoveryRedirector());
         register(new CraftedDurabilityRedirector());
         register(new FriendJoinRedirector());
         register(new FriendLeaveRedirector());
@@ -93,6 +98,7 @@ public class ChatRedirectFeature extends UserFeature {
 
         String message = e.getOriginalCodedMessage();
         MessageType messageType = e.getMessageType();
+        WynntilsMod.info(message);
 
         for (Redirector redirector : redirectors) {
             RedirectAction action = redirector.getAction();
@@ -169,6 +175,26 @@ public class ChatRedirectFeature extends UserFeature {
         }
 
         protected abstract String getNotification(Matcher matcher);
+    }
+
+    private class AreaDiscoveryRedirector extends SimpleRedirector {
+        private static final Pattern SYSTEM_PATTERN = Pattern.compile(
+                "§7Area Discovered: §r(.*) §5\\(\\+(\\d+) XP\\)");
+
+        @Override
+        public Pattern getSystemPattern() {
+            return SYSTEM_PATTERN;
+        }
+
+        @Override
+        public RedirectAction getAction() {
+            return areaDiscovery;
+        }
+
+        @Override
+        protected String getNotification(Matcher matcher) {
+            return ChatFormatting.GRAY + "Discovered " + ChatFormatting.RESET + matcher.group(1) + ChatFormatting.DARK_PURPLE + " (+" + matcher.group(2) + " XP)";
+        }
     }
 
     private class CraftedDurabilityRedirector extends SimpleRedirector {

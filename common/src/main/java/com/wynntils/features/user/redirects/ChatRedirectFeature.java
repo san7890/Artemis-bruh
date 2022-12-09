@@ -179,7 +179,7 @@ public class ChatRedirectFeature extends UserFeature {
 
     private class AreaDiscoveryRedirector extends SimpleRedirector {
         private static final Pattern SYSTEM_PATTERN = Pattern.compile(
-                "§7Area Discovered: §r(.*) §5\\(\\+(\\d+) XP\\)");
+                "§7Area Discovered: §r§f(.*)§r§d \\(\\+(\\d+) XP\\)");
 
         @Override
         public Pattern getSystemPattern() {

@@ -17,8 +17,6 @@ jobs:
         with:
           path: ${{ runner.temp }}/qodana/caches
           key: ${{ runner.os }}-qodana
-          restore-keys: |
-          ${{ runner.os }}-
       - name: Rename misc file
         run: |
           cp ./.idea/misc-example.xml ./.idea/misc.xml

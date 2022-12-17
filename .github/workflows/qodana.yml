@@ -16,7 +16,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ runner.temp }}/qodana/caches
-          key: qodana-{{ runner.os }}
+          key: qodana-${{ runner.os }}
+          restore-keys: |
+            qodana-Linux
+            qodana
       - name: Rename misc file
         run: |
           cp ./.idea/misc-example.xml ./.idea/misc.xml
